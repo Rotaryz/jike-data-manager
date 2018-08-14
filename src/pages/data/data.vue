@@ -3,32 +3,36 @@
     <div class="item-wrapper">
       <div class="item" :class="{'show': show}">
         <div class="data">
-          <div class="content">{{currentOpenCount}}</div>
+          <div class="today">{{currentTodayOpenCount}}</div>
           <div class="title">开通店铺数</div>
+          <div class="content">累计 {{currentOpenCount}}</div>
         </div>
       </div>
     </div>
     <div class="item-wrapper">
       <div class="item" :class="{'show': show}">
         <div class="data">
-          <div class="content">{{currentPayCount}}</div>
+          <div class="today">{{currentTodayPayCount}}</div>
           <div class="title">付费店铺数</div>
+          <div class="content">累计 {{currentPayCount}}</div>
         </div>
       </div>
     </div>
     <div class="item-wrapper">
       <div class="item" :class="{'show': show}">
         <div class="data">
-          <div class="content">{{currentDueOrderCount}}</div>
+          <div class="today">{{currentTodayDueOrderCount}}</div>
           <div class="title">交易订单数</div>
+          <div class="content">累计 {{currentDueOrderCount}}</div>
         </div>
       </div>
     </div>
     <div class="item-wrapper">
       <div class="item" :class="{'show': show}">
         <div class="data">
-          <div class="content">{{currentDueMoneyCount}}</div>
+          <div class="today">{{currentTodayDueMoneyCount}}</div>
           <div class="title">交易金额</div>
+          <div class="content">累计 {{currentDueMoneyCount}}</div>
         </div>
       </div>
     </div>
@@ -47,18 +51,39 @@
         show: false,
         openCount: 6000,
         currentOpenCount: 0,
+        todayOpenCount: 6000,
+        currentTodayOpenCount: 0,
         payCount: 700,
         currentPayCount: 0,
+        todayPayCount: 700,
+        currentTodayPayCount: 0,
         dueOrderCount: 3000,
         currentDueOrderCount: 0,
+        todayDueOrderCount: 3000,
+        currentTodayDueOrderCount: 0,
         dueMoneyCount: 4000,
-        currentDueMoneyCount: 0
+        currentDueMoneyCount: 0,
+        todayDueMoneyCount: 4000,
+        currentTodayDueMoneyCount: 0
       }
     },
-    created() {
-      this._getStatistics()
+    async created() {
+      await this.load()
+      this.show = true
+      this.run()
+      this.interval()
     },
     methods: {
+      interval() {
+        this.globalTimer = setInterval(async () => {
+          this.load()
+          this.run()
+        }, 300000)
+      },
+      async load() {
+        await this._getStatistics()
+        await this._getTodayStatistics()
+      },
       async _getStatistics() {
         const res = await Merchant.getStatistics()
         if (res.error !== ERR_OK) {
@@ -68,8 +93,16 @@
         this.payCount = res.data.paid_count
         this.dueOrderCount = res.data.customer_order_count
         this.dueMoneyCount = res.data.total_money
-        this.show = true
-        this.run()
+      },
+      async _getTodayStatistics() {
+        const res = await Merchant.getTodayStatistics()
+        if (res.error !== ERR_OK) {
+          return
+        }
+        this.todayOpenCount = res.data.created_shop_count
+        this.todayPayCount = res.data.paid_count
+        this.todayDueOrderCount = res.data.customer_order_count
+        this.todayDueMoneyCount = res.data.total_money
       },
       run() {
         setTimeout(() => {
@@ -84,6 +117,19 @@
             } else if (differ <= 0) {
               this.currentOpenCount = this.openCount
               openTimer && clearInterval(openTimer)
+            }
+          }, 40)
+          let todayOpenTimer = setInterval(() => {
+            let differ = this.todayOpenCount - this.currentTodayOpenCount
+            if (differ > 200) {
+              this.currentTodayOpenCount += 168
+            } else if (differ <= 200 && differ >= 20) {
+              this.currentTodayOpenCount += 16
+            } else if (differ > 0 && differ < 20) {
+              this.currentTodayOpenCount += 1
+            } else if (differ <= 0) {
+              this.currentTodayOpenCount = this.todayOpenCount
+              openTimer && clearInterval(todayOpenTimer)
             }
           }, 40)
         }, 300)
@@ -101,6 +147,19 @@
               clearInterval(payTimer)
             }
           }, 40)
+          let todayPayTimer = setInterval(() => {
+            let differ = this.todayPayCount - this.currentTodayPayCount
+            if (differ > 200) {
+              this.currentTodayPayCount += 168
+            } else if (differ <= 200 && differ >= 20) {
+              this.currentTodayPayCount += 16
+            } else if (differ > 0 && differ < 20) {
+              this.currentTodayPayCount += 1
+            } else if (differ <= 0) {
+              this.currentTodayPayCount = this.todayPayCount
+              clearInterval(todayPayTimer)
+            }
+          }, 40)
         }, 600)
         setTimeout(() => {
           let dueOrderTimer = setInterval(() => {
@@ -116,6 +175,19 @@
               clearInterval(dueOrderTimer)
             }
           }, 40)
+          let todayDueOrderTimer = setInterval(() => {
+            let differ = this.todayDueOrderCount - this.currentTodayDueOrderCount
+            if (differ > 200) {
+              this.currentTodayDueOrderCount += 168
+            } else if (differ <= 200 && differ >= 20) {
+              this.currentTodayDueOrderCount += 16
+            } else if (differ > 0 && differ < 20) {
+              this.currentTodayDueOrderCount += 1
+            } else if (differ <= 0) {
+              this.currentTodayDueOrderCount = this.todayDueOrderCount
+              clearInterval(todayDueOrderTimer)
+            }
+          }, 40)
         }, 900)
         setTimeout(() => {
           let dueMoneyTimer = setInterval(() => {
@@ -129,6 +201,19 @@
             } else if (differ <= 0) {
               this.currentDueMoneyCount = this.dueMoneyCount
               clearInterval(dueMoneyTimer)
+            }
+          }, 40)
+          let todayDueMoneyTimer = setInterval(() => {
+            let differ = this.todayDueMoneyCount - this.currentTodayDueMoneyCount
+            if (differ > 200) {
+              this.currentTodayDueMoneyCount += 168
+            } else if (differ <= 200 && differ >= 20) {
+              this.currentTodayDueMoneyCount += 16
+            } else if (differ > 0 && differ < 20) {
+              this.currentTodayDueMoneyCount += 1
+            } else if (differ <= 0) {
+              this.currentTodayDueMoneyCount = this.todayDueMoneyCount
+              clearInterval(todayDueMoneyTimer)
             }
           }, 40)
         }, 1200)
@@ -205,10 +290,14 @@
           border-radius: 20px
           color: #ffffff
           transition: all .5s
-          .content
-            margin-bottom: 30px
+          .today
+            margin-bottom: 20px
             font-family: 'DINAlternate-Bold'
             font-size: 70px
           .title
+            margin-bottom: 20px
+            font-size: 25px
+          .content
+            margin-bottom: 30px
             font-size: 25px
 </style>
