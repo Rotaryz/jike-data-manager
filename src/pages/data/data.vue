@@ -73,6 +73,21 @@
       this.run()
       this.interval()
     },
+    beforeDestroy() {
+      this.globalTimer && clearInterval(this.globalTimer)
+      this.openTimeout && clearTimeout(this.openTimeout)
+      this.payTimeout && clearTimeout(this.payTimeout)
+      this.dueOrderTimeout && clearTimeout(this.dueOrderTimeout)
+      this.dueMoneyTimeout && clearTimeout(this.dueMoneyTimeout)
+      this.openTimer && clearInterval(this.openTimer)
+      this.todayOpenTimer && clearInterval(this.todayOpenTimer)
+      this.payTimer && clearInterval(this.payTimer)
+      this.todayPayTimer && clearInterval(this.todayPayTimer)
+      this.dueOrderTimer && clearInterval(this.dueOrderTimer)
+      this.todayDueOrderTimer && clearInterval(this.todayDueOrderTimer)
+      this.dueMoneyTimer && clearInterval(this.dueMoneyTimer)
+      this.todayDueMoneyTimer && clearInterval(this.todayDueMoneyTimer)
+    },
     methods: {
       interval() {
         this.globalTimer = setInterval(async () => {
@@ -105,8 +120,8 @@
         this.todayDueMoneyCount = res.data.total_money
       },
       run() {
-        setTimeout(() => {
-          let openTimer = setInterval(() => {
+        this.openTimeout = setTimeout(() => {
+          this.openTimer = setInterval(() => {
             let differ = this.openCount - this.currentOpenCount
             if (differ > 200) {
               this.currentOpenCount += 168
@@ -116,10 +131,10 @@
               this.currentOpenCount += 1
             } else if (differ <= 0) {
               this.currentOpenCount = this.openCount
-              openTimer && clearInterval(openTimer)
+              this.openTimer && clearInterval(this.openTimer)
             }
           }, 40)
-          let todayOpenTimer = setInterval(() => {
+          this.todayOpenTimer = setInterval(() => {
             let differ = this.todayOpenCount - this.currentTodayOpenCount
             if (differ > 200) {
               this.currentTodayOpenCount += 168
@@ -129,12 +144,12 @@
               this.currentTodayOpenCount += 1
             } else if (differ <= 0) {
               this.currentTodayOpenCount = this.todayOpenCount
-              openTimer && clearInterval(todayOpenTimer)
+              this.todayOpenTimer && clearInterval(this.todayOpenTimer)
             }
           }, 40)
         }, 300)
-        setTimeout(() => {
-          let payTimer = setInterval(() => {
+        this.payTimeout = setTimeout(() => {
+          this.payTimer = setInterval(() => {
             let differ = this.payCount - this.currentPayCount
             if (differ > 200) {
               this.currentPayCount += 168
@@ -144,10 +159,10 @@
               this.currentPayCount += 1
             } else if (differ <= 0) {
               this.currentPayCount = this.payCount
-              clearInterval(payTimer)
+              this.payTimer && clearInterval(this.payTimer)
             }
           }, 40)
-          let todayPayTimer = setInterval(() => {
+          this.todayPayTimer = setInterval(() => {
             let differ = this.todayPayCount - this.currentTodayPayCount
             if (differ > 200) {
               this.currentTodayPayCount += 168
@@ -157,12 +172,12 @@
               this.currentTodayPayCount += 1
             } else if (differ <= 0) {
               this.currentTodayPayCount = this.todayPayCount
-              clearInterval(todayPayTimer)
+              this.todayPayTimer && clearInterval(this.todayPayTimer)
             }
           }, 40)
         }, 600)
-        setTimeout(() => {
-          let dueOrderTimer = setInterval(() => {
+        this.dueOrderTimeout = setTimeout(() => {
+          this.dueOrderTimer = setInterval(() => {
             let differ = this.dueOrderCount - this.currentDueOrderCount
             if (differ > 200) {
               this.currentDueOrderCount += 168
@@ -172,10 +187,10 @@
               this.currentDueOrderCount += 1
             } else if (differ <= 0) {
               this.currentDueOrderCount = this.dueOrderCount
-              clearInterval(dueOrderTimer)
+              this.dueOrderTimer && clearInterval(this.dueOrderTimer)
             }
           }, 40)
-          let todayDueOrderTimer = setInterval(() => {
+          this.todayDueOrderTimer = setInterval(() => {
             let differ = this.todayDueOrderCount - this.currentTodayDueOrderCount
             if (differ > 200) {
               this.currentTodayDueOrderCount += 168
@@ -185,12 +200,12 @@
               this.currentTodayDueOrderCount += 1
             } else if (differ <= 0) {
               this.currentTodayDueOrderCount = this.todayDueOrderCount
-              clearInterval(todayDueOrderTimer)
+              this.todayDueOrderTimer && clearInterval(this.todayDueOrderTimer)
             }
           }, 40)
         }, 900)
-        setTimeout(() => {
-          let dueMoneyTimer = setInterval(() => {
+        this.dueMoneyTimeout = setTimeout(() => {
+          this.dueMoneyTimer = setInterval(() => {
             let differ = this.dueMoneyCount - this.currentDueMoneyCount
             if (differ > 200) {
               this.currentDueMoneyCount += 168
@@ -200,10 +215,10 @@
               this.currentDueMoneyCount += 1
             } else if (differ <= 0) {
               this.currentDueMoneyCount = this.dueMoneyCount
-              clearInterval(dueMoneyTimer)
+              this.dueMoneyTimer && clearInterval(this.dueMoneyTimer)
             }
           }, 40)
-          let todayDueMoneyTimer = setInterval(() => {
+          this.todayDueMoneyTimer = setInterval(() => {
             let differ = this.todayDueMoneyCount - this.currentTodayDueMoneyCount
             if (differ > 200) {
               this.currentTodayDueMoneyCount += 168
@@ -213,7 +228,7 @@
               this.currentTodayDueMoneyCount += 1
             } else if (differ <= 0) {
               this.currentTodayDueMoneyCount = this.todayDueMoneyCount
-              clearInterval(todayDueMoneyTimer)
+              this.todayDueMoneyTimer && clearInterval(this.todayDueMoneyTimer)
             }
           }, 40)
         }, 1200)
