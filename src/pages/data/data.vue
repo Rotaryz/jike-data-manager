@@ -249,7 +249,7 @@
 
   .logo
     position: absolute
-    top: 100px
+    top: 3vw
     left: 50%
     transform: translateX(-50%)
     .text
