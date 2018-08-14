@@ -264,7 +264,7 @@
     align-items: center
     width: 100vw
     height: 100vh
-    padding: 30px 200px
+    padding: 30px 10vw
     background-image: url("./pic_bg.png")
     background-size: 100% 100%
     background-repeat: no-repeat
