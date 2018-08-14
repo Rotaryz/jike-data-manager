@@ -277,7 +277,7 @@
         transition-delay: .3s
         transform: translate3d(0, -300px, 0)
         .data
-          background-image: linear-gradient(-90deg, #48D5FF 0%, #0F89ED 100%)
+          background-image: linear-gradient(90deg, #48D5FF 0%, #0F89ED 100%)
           box-shadow:0px 0px 5px #48D5FF
           &:hover
             box-shadow:0px 0px 50px #0F89ED
@@ -285,7 +285,7 @@
         transition-delay: .6s
         transform: translate3d(-300px, 0, 0)
         .data
-          background-image: linear-gradient(-90deg, #FFB51D 0%, #F16718 100%)
+          background-image: linear-gradient(90deg, #FFB51D 0%, #F16718 100%)
           box-shadow:0px 0px 5px #FFB51D
           &:hover
             box-shadow:0px 0px 50px #F16718
@@ -293,7 +293,7 @@
         transition-delay: .9s
         transform: translate3d(0, 300px, 0)
         .data
-          background-image: linear-gradient(-90deg, #9EEA8F 0%, #3CD79F 100%)
+          background-image: linear-gradient(90deg, #9EEA8F 0%, #3CD79F 100%)
           box-shadow:0px 0px 5px #9EEA8F
           &:hover
             box-shadow:0px 0px 50px #3CD79F
@@ -301,7 +301,7 @@
         transition-delay: 1.2s
         transform: translate3d(300px, 0, 0)
         .data
-          background-image: linear-gradient(-90deg, #B867FF 0%, #751EF6 96%)
+          background-image: linear-gradient(90deg, #B867FF 0%, #751EF6 96%)
           box-shadow:0px 0px 5px #B867FF
           &:hover
             box-shadow:0px 0px 50px #751EF6
