@@ -1,38 +1,44 @@
 <template>
   <div class="data-wrapper">
-    <div class="item-wrapper">
-      <div class="item" :class="{'show': show}">
-        <div class="data">
-          <div class="today">{{currentTodayOpenCount}}</div>
-          <div class="title">开通店铺数</div>
-          <div class="content">累计 {{currentOpenCount}}</div>
+    <div class="logo">
+      <img src="./icon-logo.png" alt="" width="150" height="150">
+      <p class="text">赞播微店</p>
+    </div>
+    <div class="list-wrapper">
+      <div class="item-wrapper">
+        <div class="item" :class="{'show': show}">
+          <div class="data">
+            <div class="today">{{currentTodayOpenCount}}</div>
+            <div class="title">开通店铺数</div>
+            <div class="content">累计 {{currentOpenCount}}</div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="item-wrapper">
-      <div class="item" :class="{'show': show}">
-        <div class="data">
-          <div class="today">{{currentTodayPayCount}}</div>
-          <div class="title">付费店铺数</div>
-          <div class="content">累计 {{currentPayCount}}</div>
+      <div class="item-wrapper">
+        <div class="item" :class="{'show': show}">
+          <div class="data">
+            <div class="today">{{currentTodayPayCount}}</div>
+            <div class="title">付费店铺数</div>
+            <div class="content">累计 {{currentPayCount}}</div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="item-wrapper">
-      <div class="item" :class="{'show': show}">
-        <div class="data">
-          <div class="today">{{currentTodayDueOrderCount}}</div>
-          <div class="title">交易订单数</div>
-          <div class="content">累计 {{currentDueOrderCount}}</div>
+      <div class="item-wrapper">
+        <div class="item" :class="{'show': show}">
+          <div class="data">
+            <div class="today">{{currentTodayDueOrderCount}}</div>
+            <div class="title">交易订单数</div>
+            <div class="content">累计 {{currentDueOrderCount}}</div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="item-wrapper">
-      <div class="item" :class="{'show': show}">
-        <div class="data">
-          <div class="today">{{currentTodayDueMoneyCount}}</div>
-          <div class="title">交易金额</div>
-          <div class="content">累计 {{currentDueMoneyCount}}</div>
+      <div class="item-wrapper">
+        <div class="item" :class="{'show': show}">
+          <div class="data">
+            <div class="today">{{currentTodayDueMoneyCount}}</div>
+            <div class="title">交易金额</div>
+            <div class="content">累计 {{currentDueMoneyCount}}</div>
+          </div>
         </div>
       </div>
     </div>
@@ -239,6 +245,20 @@
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
   .data-wrapper
+    position: relative
+
+  .logo
+    position: absolute
+    top: 100px
+    left: 50%
+    transform: translateX(-50%)
+    .text
+      text-align: center
+      font-family: 'PingFangSC-Semibold'
+      font-size: 30px
+      color: #ffffff
+
+  .list-wrapper
     box-sizing: border-box
     display: flex
     align-items: center
