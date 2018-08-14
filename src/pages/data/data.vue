@@ -244,8 +244,11 @@
     align-items: center
     width: 100vw
     height: 100vh
-    padding: 30px
-    background: #ffffff
+    padding: 30px 200px
+    background-image: url("./pic_bg.png")
+    background-size: 100% 100%
+    background-repeat: no-repeat
+    background-position: center center
     .item-wrapper
       box-sizing: border-box
       width: 25%
