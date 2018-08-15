@@ -97,7 +97,7 @@
     methods: {
       interval() {
         this.globalTimer = setInterval(async () => {
-          this.load()
+          await this.load()
           this.run()
         }, 300000)
       },
@@ -113,7 +113,7 @@
         this.openCount = res.data.created_shop_count
         this.payCount = res.data.paid_count
         this.dueOrderCount = res.data.customer_order_count
-        this.dueMoneyCount = res.data.total_money
+        this.dueMoneyCount = Number(res.data.total_money)
       },
       async _getTodayStatistics() {
         const res = await Merchant.getTodayStatistics()
@@ -123,7 +123,7 @@
         this.todayOpenCount = res.data.created_shop_count
         this.todayPayCount = res.data.paid_count
         this.todayDueOrderCount = res.data.customer_order_count
-        this.todayDueMoneyCount = res.data.total_money
+        this.todayDueMoneyCount = Number(res.data.total_money)
       },
       run() {
         this.openTimeout = setTimeout(() => {
